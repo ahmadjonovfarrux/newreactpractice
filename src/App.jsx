@@ -17,6 +17,7 @@ import { onAuthStateChanged } from "firebase/auth";
 
 function App() {
   const { user, dispatch, isAuthReady } = useGlobalContext();
+  console.log(isAuthReady);
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -45,15 +46,18 @@ function App() {
       element: user ? <Navigate to="/" /> : <Register />,
     },
   ]);
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user.displayName && user.photoURL) {
+      if (user?.displayName && user?.photoURL) {
         dispatch({ type: "LOGIN", payload: user });
-        dispatch({ type: "AUTH_READY" });
       }
     });
+    dispatch({ type: "AUTH_READY" });
   }, []);
+
   return <>{isAuthReady && <RouterProvider router={routes} />}</>;
+  // return <RouterProvider router={routes} />;
 }
 
 export default App;

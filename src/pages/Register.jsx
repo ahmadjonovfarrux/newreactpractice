@@ -13,6 +13,8 @@ function Register() {
     const password = formData.get("password");
     register(email, displayName, password);
   };
+
+  console.log(1);
   return (
     <section>
       <div className="login-register-wrapper">
@@ -28,9 +30,20 @@ function Register() {
 
             <FormInput label="Password" name="password" type="password" />
             <div className="flex items-center gap-5 mt-8 mb-8">
-              <button type="submit" className="btn btn-primary grow">
-                Register
-              </button>
+              {!isPending && (
+                <button type="submit" className="btn btn-primary grow">
+                  Register
+                </button>
+              )}
+              {isPending && (
+                <button
+                  type="submit"
+                  className="btn btn-primary grow "
+                  disabled
+                >
+                  Loading...
+                </button>
+              )}
               <button type="button" className="btn btn-secondary grow">
                 Google
               </button>
