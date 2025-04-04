@@ -7,7 +7,7 @@ const initialState = {
   isAuthReady: false,
 };
 
-const reducer = (action, state) => {
+const reducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
