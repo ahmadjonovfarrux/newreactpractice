@@ -2,8 +2,14 @@ import React from "react";
 import FormInput from "../components/FormInput";
 import { Link } from "react-router-dom";
 import { useRegister } from "../hooks/useRegister";
+import { useGoogleProvider } from "../hooks/useGoogleProvider";
 
 function Register() {
+  const {
+    data: _data,
+    googleProvider,
+    isPending: _isPending,
+  } = useGoogleProvider();
   const { data, isPending, register } = useRegister();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,7 +20,6 @@ function Register() {
     register(email, displayName, password);
   };
 
-  console.log(1);
   return (
     <section>
       <div className="login-register-wrapper">
@@ -38,15 +43,31 @@ function Register() {
               {isPending && (
                 <button
                   type="submit"
-                  className="btn btn-primary grow "
+                  className="btn btn-primary grow btn-disabled"
                   disabled
                 >
                   Loading...
                 </button>
               )}
-              <button type="button" className="btn btn-secondary grow">
-                Google
-              </button>
+              {/* Google button */}
+              {!_isPending && (
+                <button
+                  onClick={googleProvider}
+                  type="button"
+                  className="btn btn-secondary grow"
+                >
+                  Google
+                </button>
+              )}
+              {_isPending && (
+                <button
+                  type="button"
+                  className="btn btn-secondary grow"
+                  disabled
+                >
+                  Loading...{" "}
+                </button>
+              )}
             </div>
             <p className="text-center opacity-75 text-white md:text-black">
               If you have account
