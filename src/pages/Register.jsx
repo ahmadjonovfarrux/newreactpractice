@@ -5,12 +5,18 @@ import { useRegister } from "../hooks/useRegister";
 import { useGoogleProvider } from "../hooks/useGoogleProvider";
 
 function Register() {
+  // const {
+  //   data: _data,
+  //   googleProvider,
+  //   isPending: _isPending,
+  // } = useGoogleProvider();
+  const { data, isPending, register } = useRegister();
   const {
+    isPending: _isPending,
     data: _data,
     googleProvider,
-    isPending: _isPending,
   } = useGoogleProvider();
-  const { data, isPending, register } = useRegister();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -52,7 +58,7 @@ function Register() {
               {/* Google button */}
               {!_isPending && (
                 <button
-                  onClick={googleProvider}
+                  onClick={register}
                   type="button"
                   className="btn btn-secondary grow"
                 >
