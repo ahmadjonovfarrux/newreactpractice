@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { auth } from "../firebase/config";
+import { auth, db } from "../firebase/config";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import toast from "react-hot-toast";
 import { useGlobalContext } from "./useGlobalContext";
+import { doc, setDoc } from "firebase/firestore";
 
 export const useRegister = () => {
   const { dispatch } = useGlobalContext();
@@ -19,6 +20,11 @@ export const useRegister = () => {
       });
       const user = req.user;
       toast.success(`Welcome, ${displayName}`);
+      await setDoc(doc(db, "users", "user.uid"), {
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        online: true,
+      });
       dispatch({ type: "LOGIN", payload: user });
       setData(user);
     } catch (error) {

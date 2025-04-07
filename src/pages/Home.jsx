@@ -1,11 +1,18 @@
-import React from 'react'
-import { useCollectin } from '../hooks/useCollection'
+import { useEffect, useState } from "react";
+import { useCollection } from "../hooks/useCollection";
 
 function Home() {
-  const {data} = useCollectin("recepies")
+  const { data } = useCollection("recepies");
+  const { data: _users } = useCollection("users");
+
   return (
-    <div>Home</div>
-  )
+    <div>
+      {data &&
+        data.map((r) => {
+          return <h2 key={Math.random()}>{r.title}</h2>;
+        })}
+    </div>
+  );
 }
 
-export default Home
+export default Home;
