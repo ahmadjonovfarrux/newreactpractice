@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { auth } from "../firebase/config";
+import { auth, db } from "../firebase/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import toast from "react-hot-toast";
 import { useGlobalContext } from "./useGlobalContext";
+import { doc, updateDoc } from "firebase/firestore";
+
+
 
 export const useLogin = () => {
   const { dispatch } = useGlobalContext();
@@ -15,6 +18,10 @@ export const useLogin = () => {
       setIsPending(true);
       const req = await signInWithEmailAndPassword(auth, email, password);
       const user = req.user;
+      const userRef = doc(db, user.uid);
+      await updateDoc(userRef, {
+        online: true,
+      });
       console.log(user);
       toast.success(`Welcome come back, ${user.displayName}`);
       dispatch({ type: "LOGIN", payload: user });

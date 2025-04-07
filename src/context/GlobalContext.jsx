@@ -24,7 +24,7 @@ const reducer = (state, action) => {
 
 export const GlobalContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log(state);
+  // console.log(state);
   return (
     <GlobalContext.Provider value={{ ...state, dispatch }}>
       {children}

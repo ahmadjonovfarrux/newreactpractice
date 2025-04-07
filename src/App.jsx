@@ -17,7 +17,6 @@ import { onAuthStateChanged } from "firebase/auth";
 
 function App() {
   const { user, dispatch, isAuthReady } = useGlobalContext();
-  console.log(isAuthReady);
   const routes = createBrowserRouter([
     {
       path: "/",
