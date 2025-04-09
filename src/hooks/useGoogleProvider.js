@@ -1,8 +1,9 @@
-import { auth } from "../firebase/config";
+import { auth, db } from "../firebase/config";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useGlobalContext } from "./useGlobalContext";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { doc, setDoc } from "firebase/firestore";
 
 export const useGoogleProvider = () => {
   const { dispatch } = useGlobalContext();
@@ -15,8 +16,13 @@ export const useGoogleProvider = () => {
       const provider = new GoogleAuthProvider();
 
       const req = await signInWithPopup(auth, provider);
-
       const user = req.user;
+      await setDoc(doc(db, "users", user.uid), {
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        online: true,
+      });
+      toast.success(`Welcome, ${user.displayName}`);
       dispatch({ type: "LOGIN", payload: user });
       setData(user);
       toast.success(`Welcome ${user.displayName}`);
@@ -29,4 +35,3 @@ export const useGoogleProvider = () => {
   };
   return { isPending, data, googleProvider };
 };
-

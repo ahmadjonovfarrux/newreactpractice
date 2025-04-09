@@ -2,8 +2,9 @@ import { useCollection } from "../hooks/useCollection";
 
 function OnlineUsers() {
   const { data } = useCollection("users");
+
   return (
-    <div>
+    <div className="w-3xs">
       {data &&
         data.map((d) => {
           return (

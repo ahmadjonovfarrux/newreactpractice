@@ -6,10 +6,10 @@ function Home() {
   const { data: _users } = useCollection("users");
 
   return (
-    <div>
+    <div className="overflow-y-auto">
       {data &&
         data.map((r) => {
-          return <h2 key={Math.random()}>{r.title}</h2>;
+          return <h2 key={r.id}>{r.title}</h2>;
         })}
     </div>
   );
