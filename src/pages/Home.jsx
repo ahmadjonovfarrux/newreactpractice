@@ -16,7 +16,7 @@ function Home() {
                 <h2 className="card-title">{r.title}</h2>
                 <p>{r.description}</p>
               </div>
-              <figure>
+              <figure className="pb-4">
                 <img src={r.imgUrl} alt="image of food" />
               </figure>
             </div>
