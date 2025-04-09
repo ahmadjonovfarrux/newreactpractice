@@ -19,12 +19,12 @@ export const useRegister = () => {
         photoURL: `https://api.dicebear.com/9.x/open-peeps/svg?seed=${displayName}`,
       });
       const user = req.user;
-      toast.success(`Welcome, ${displayName}`);
-      await setDoc(doc(db, "users", "user.uid"), {
+      await setDoc(doc(db, "users", user.uid), {
         displayName: user.displayName,
         photoURL: user.photoURL,
         online: true,
       });
+      toast.success(`Welcome, ${displayName}`);
       dispatch({ type: "LOGIN", payload: user });
       setData(user);
     } catch (error) {

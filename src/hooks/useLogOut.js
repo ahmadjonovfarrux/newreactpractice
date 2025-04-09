@@ -3,17 +3,16 @@ import { auth } from "../firebase/config";
 import { useState } from "react";
 import { useGlobalContext } from "./useGlobalContext";
 import toast from "react-hot-toast";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../firebase/config";
+import { useFireStore } from "./useFireStore";
 
 export const useLogout = () => {
-  const { dispatch, users } = useGlobalContext();
+  const { dispatch, user } = useGlobalContext();
   const [isPending, setIsPending] = useState(false);
+  const { updataDocument } = useFireStore("users");
 
   const logout = async () => {
     try {
-      const userRef = doc(db, users.uid);
-      await updateDoc(userRef, {
+      updataDocument(user.uid, {
         online: false,
       });
       setIsPending(true);
@@ -22,7 +21,6 @@ export const useLogout = () => {
       toast.success("See you soon :)");
     } catch (error) {
       toast.error(error.message);
-      console.log(error.message);
     } finally {
       setIsPending(false);
     }
